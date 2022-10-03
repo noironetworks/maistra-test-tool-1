@@ -30,7 +30,7 @@ type Bookinfo struct {
 func (b *Bookinfo) Install(mtls bool) {
 	util.Log.Info("Deploying Bookinfo")
 	util.KubeApply(b.Namespace, bookinfoYaml)
-	time.Sleep(time.Duration(5) * time.Second)
+	time.Sleep(time.Duration(20) * time.Second)
 	util.CheckPodRunning(b.Namespace, "app=details")
 	util.CheckPodRunning(b.Namespace, "app=ratings")
 	util.CheckPodRunning(b.Namespace, "app=reviews,version=v1")
@@ -47,7 +47,7 @@ func (b *Bookinfo) Install(mtls bool) {
 	} else {
 		util.KubeApply(b.Namespace, bookinfoRuleAllYaml)
 	}
-	time.Sleep(time.Duration(10) * time.Second)
+	time.Sleep(time.Duration(20) * time.Second)
 }
 
 func (b *Bookinfo) Uninstall() {
@@ -55,5 +55,5 @@ func (b *Bookinfo) Uninstall() {
 	util.KubeDelete(b.Namespace, bookinfoRuleAllYaml)
 	util.KubeDelete(b.Namespace, bookinfoGateway)
 	util.KubeDelete(b.Namespace, bookinfoYaml)
-	time.Sleep(time.Duration(10) * time.Second)
+	time.Sleep(time.Duration(20) * time.Second)
 }

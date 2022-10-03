@@ -47,7 +47,7 @@ func TestEgressTLSOrigination(t *testing.T) {
 
 		util.Log.Info("Create a ServiceEntry to external istio.io")
 		util.KubeApplyContents("bookinfo", ExServiceEntry)
-		time.Sleep(time.Duration(10) * time.Second)
+		time.Sleep(time.Duration(20) * time.Second)
 
 		command := `curl -sSL -o /dev/null -D - http://istio.io`
 		msg, err := util.PodExec("bookinfo", sleepPod, "sleep", command, false)
@@ -65,7 +65,7 @@ func TestEgressTLSOrigination(t *testing.T) {
 
 		util.Log.Info("TLS origination for egress traffic")
 		util.KubeApplyContents("bookinfo", ExServiceEntryOriginate)
-		time.Sleep(time.Duration(10) * time.Second)
+		time.Sleep(time.Duration(20) * time.Second)
 
 		command := `curl -sSL -o /dev/null -D - http://istio.io`
 		msg, err := util.PodExec("bookinfo", sleepPod, "sleep", command, false)

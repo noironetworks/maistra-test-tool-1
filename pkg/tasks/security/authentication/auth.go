@@ -294,7 +294,7 @@ func TestAuthPolicy(t *testing.T) {
 
 		util.Log.Info("Require a valid token")
 		util.KubeApplyContents(meshNamespace, util.RunTemplate(RequireTokenPolicyTemplate, smcp))
-		time.Sleep(time.Duration(20) * time.Second)
+		time.Sleep(time.Duration(30) * time.Second)
 
 		msg, err := util.Shell(`curl %s/headers -s -o /dev/null -w "%%{http_code}\n"`, gatewayHTTP)
 		util.Inspect(err, "Failed to get httpbin header response", "", t)
@@ -307,7 +307,7 @@ func TestAuthPolicy(t *testing.T) {
 
 		util.Log.Info("Require valid tokens per-path")
 		util.KubeApplyContents(meshNamespace, util.RunTemplate(RequireTokenPathPolicyTemplate, smcp))
-		time.Sleep(time.Duration(20) * time.Second)
+		time.Sleep(time.Duration(30) * time.Second)
 
 		msg, err = util.Shell(`curl %s/headers -s -o /dev/null -w "%%{http_code}\n"`, gatewayHTTP)
 		util.Inspect(err, "Failed to get httpbin header response", "", t)

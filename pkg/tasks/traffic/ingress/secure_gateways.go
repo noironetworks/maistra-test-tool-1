@@ -19,13 +19,14 @@ import (
 	"strings"
 	"testing"
 	"time"
-
+	"os"
 	"github.com/maistra/maistra-test-tool/pkg/examples"
 	"github.com/maistra/maistra-test-tool/pkg/util"
 )
 
 func cleanupSecureGateways() {
 	util.Log.Info("Cleanup")
+	os.Unsetenv("GODEBUG")
 	httpbin := examples.Httpbin{"bookinfo"}
 	util.KubeDeleteContents("bookinfo", httpbinTLSGatewayMTLS)
 	util.KubeDeleteContents("bookinfo", multiHostsGateway)
@@ -44,7 +45,7 @@ func TestSecureGateways(t *testing.T) {
 	util.Log.Info("Test Secure Gateways")
 	httpbin := examples.Httpbin{"bookinfo"}
 	httpbin.Install()
-
+	os.Setenv("GODEBUG","x509ignoreCN=0")
 	if util.Getenv("SAMPLEARCH", "x86") == "p" {
 		util.KubeApplyContents("bookinfo", helloworldv1P)
 	} else if util.Getenv("SAMPLEARCH", "x86") == "z" {

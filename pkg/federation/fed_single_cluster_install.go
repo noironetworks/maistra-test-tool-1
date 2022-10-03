@@ -25,7 +25,7 @@ import (
 
 func cleanupSingleClusterFed() {
 	util.Log.Info("Cleanup ...")
-	util.Shell(`pushd ../testdata/examples/federation \
+	util.BashShell(`pushd ../testdata/examples/federation \
 			&& export MESH1_KUBECONFIG=~/.kube/config \
 			&& export MESH2_KUBECONFIG=~/.kube/config \
 			&& ./cleanup.sh`)
@@ -41,20 +41,20 @@ func getenv(key, fallback string) string {
 }
 
 func TestSingleClusterFed(t *testing.T) {
-	defer cleanupSingleClusterFed()
+//	defer cleanupSingleClusterFed()
 
 	t.Run("federation_single_cluster_install", func(t *testing.T) {
 		defer util.RecoverPanic(t)
 		util.Log.Info("Test federation install in a single cluster")
 		util.Log.Info("Reference: https://github.com/maistra/istio/blob/maistra-2.1/pkg/servicemesh/federation/example/config-poc/install.sh")
 		util.Log.Info("Running install.sh waiting 1 min...")
-		util.Shell(`pushd ../testdata/examples/federation \
+		util.BashShell(`pushd ../testdata/examples/federation \
 			&& export MESH1_KUBECONFIG=~/.kube/config \
 			&& export MESH2_KUBECONFIG=~/.kube/config \
 			&& ./install.sh`)
 
-		util.Log.Info("Waiting 40s...")
-		time.Sleep(time.Duration(40) * time.Second)
+		util.Log.Info("Waiting 100s...")
+		time.Sleep(time.Duration(100) * time.Second)
 
 		util.Log.Info("Verify mesh1 connection status")
 		msg, err := util.Shell(`oc -n mesh1-system get servicemeshpeer mesh2 -o json`)

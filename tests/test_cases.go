@@ -48,10 +48,10 @@ var smokeTests = []testing.InternalTest{
 }
 
 var armCases = []testing.InternalTest{
-	testing.InternalTest{
-		Name: "A1",
-		F:    ossm.TestSMCPInstall,
-	},
+//	testing.InternalTest{
+//		Name: "A1",
+//		F:    ossm.TestSMCPInstall,
+//	},
 	testing.InternalTest{
 		Name: "A2",
 		F:    ossm.TestBookinfo,
